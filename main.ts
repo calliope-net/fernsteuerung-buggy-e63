@@ -16,7 +16,8 @@ receiver.beimStart(
 receiver.eHardware.v3,
 90,
 true,
-65
+65,
+true
 )
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
