@@ -14,13 +14,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
-receiver.beimStart(
-receiver.eHardware.v3,
-90,
-true,
-65,
-true
-)
+receiver.beimStart2Motoren()
 btf.comment(receiver.spurSensorRegisterEvents(true))
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
