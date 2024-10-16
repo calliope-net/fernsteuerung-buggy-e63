@@ -1,3 +1,7 @@
+receiver.onSpurPinEvent(function (links_hell, rechts_hell) {
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffffff, links_hell)
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), 0xffffff, rechts_hell)
+})
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
 })
@@ -6,8 +10,6 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, true)
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffffff, receiver.pinSpurrechts(receiver.eDH.hell))
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), 0xffffff, receiver.pinSpurlinks(receiver.eDH.hell))
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
@@ -19,6 +21,7 @@ true,
 65,
 true
 )
+btf.comment(receiver.spurSensorRegisterEvents(true))
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
         receiver.pinRelay(false)
