@@ -51,10 +51,25 @@ input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonBhold()
 })
 btf.onReceivedDataChanged(function (receivedData, changed) {
+    if (changed) {
+        receiver.selectMotorStop(true)
+        receiver.selectRanging(false)
+        btf.setLedColorsOff()
+    }
+    receiver.setFunktion(receiver.eFunktion.ng, receiver.eTimeoutDisable.nicht)
+    Ultraschall_Sensor_Knopf_A = false
     receiver.fahreJoystick(receivedData, 30)
-    btf.zeige5x5Buffer(receivedData)
-    btf.zeige5x5Joystick(receivedData)
+    receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
+    receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
+    if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
+        btf.zeige5x5Betriebsart(true, false)
+    } else {
+        btf.zeige5x5Buffer(receivedData)
+        btf.zeige5x5Joystick(receivedData)
+    }
     btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, true)
+    receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
+    pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), !(btf.getSchalter(receivedData, btf.e0Schalter.b0)))
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
@@ -75,6 +90,10 @@ loops.everyInterval(700, function () {
     } else if (btf.timeout(1000)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
+        receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
+        receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
+        receiver.ringTone(false)
+        pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), true)
     } else if (btf.timeout(1000, true)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
