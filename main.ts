@@ -4,8 +4,8 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     receiver.isFunktion(receiver.eFunktion.spur_folgen),
     links_hell,
     rechts_hell,
+    255,
     192,
-    160,
     31,
     0,
     abstand_Stop,
@@ -66,7 +66,7 @@ basic.forever(function () {
     receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
-    receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, 30, 35)
+    receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, 20, 25)
     receiver.raiseSpurEvent(receiver.isFunktion(receiver.eFunktion.spur_folgen))
 })
 loops.everyInterval(700, function () {
