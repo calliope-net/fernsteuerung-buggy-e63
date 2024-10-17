@@ -1,7 +1,13 @@
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffffff, links_hell)
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), 0xffffff, rechts_hell)
     receiver.buffer_Spur_folgen(btf.btf_receivedBuffer19(), links_hell, rechts_hell, abstand_Stop)
+})
+receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
+    receiver.buffer_Hindernis_ausweichen(btf.btf_receivedBuffer19(), abstand_Stop)
+    if (abstand_Stop) {
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xff0000)
+    } else {
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffff00, abstand_Sensor)
+    }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
@@ -16,8 +22,8 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 receiver.beimStart2Motoren()
-btf.comment(receiver.spurSensorRegisterEvents(true))
 basic.forever(function () {
+    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19())
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
 })
