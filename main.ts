@@ -14,6 +14,7 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        Stop = 30
         receiver.setFunktion(receiver.eFunktion.hindernis_ausweichen)
     } else if (receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)) {
         receiver.setFunktion(receiver.eFunktion.ng)
@@ -23,6 +24,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        Stop = 25
         Ultraschall_Sensor_Knopf_A = true
         receiver.setFunktion(receiver.eFunktion.spur_folgen)
     } else if (receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
@@ -74,6 +76,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
+let Stop = 0
 let Ultraschall_Sensor_Knopf_A = false
 receiver.beimStart2Motoren()
 Ultraschall_Sensor_Knopf_A = false
@@ -81,7 +84,7 @@ basic.forever(function () {
     receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
-    receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, 20, 25)
+    receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, Stop, Stop + 5)
     receiver.raiseSpurEvent(receiver.isFunktion(receiver.eFunktion.spur_folgen))
 })
 loops.everyInterval(700, function () {
