@@ -18,6 +18,7 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
 receiver.beimStart2Motoren()
 btf.comment(receiver.spurSensorRegisterEvents(true))
 basic.forever(function () {
+    receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
 })
 loops.everyInterval(700, function () {
