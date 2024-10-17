@@ -13,7 +13,7 @@ input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonBhold()
 })
 btf.onReceivedDataChanged(function (receivedData, changed) {
-    receiver.dual2MotorenLenkenBuffer(receivedData, 30)
+    receiver.fahreJoystick(receivedData, 30)
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, true)
